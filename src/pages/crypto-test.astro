@@ -1,0 +1,111 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="AstroCrypto Test Page">
+  <p>This page exists to test crypto.js and the encryption/decryption.</p>
+  <fieldset class="box">
+    <label for="plain">
+      Plain Text
+      <textarea id="plain" name="plain"
+        >{
+          `If you want to keep a secret, you must also hide it from yourself.
+        ― George Orwell, 1984`
+        }</textarea
+      >
+    </label>
+    <label for="password">
+      Password
+      <input type="text" name="password" value="hunter2" />
+    </label>
+    <div class="buttons">
+      <button name="encrypt">Encrypt &darr;</button>
+      <button name="decrypt">&uarr; Decrypt</button>
+    </div>
+    <label for="encrypted">
+      Encrypted
+      <textarea id="encrypted" name="encrypted"></textarea>
+    </label>
+  </fieldset>
+  <p><a href="/">Return the Homepage</a></p>
+</Layout>
+
+<script>
+  import { encrypt, decrypt } from "../crypto";
+
+  document
+    .querySelector('button[name="encrypt"]')
+    .addEventListener("click", async (e) => {
+      const toBeEncrypted = document.querySelector("textarea#plain").value;
+      const password = document.querySelector('input[name="password"]').value;
+
+      try {
+        const encrypted = await encrypt(toBeEncrypted, password);
+        document.querySelector("textarea#encrypted").value = encrypted;
+        document.querySelector("textarea#plain").value = "";
+      } catch (error) {
+        alert(error);
+      }
+    });
+
+  document
+    .querySelector('button[name="decrypt"]')
+    .addEventListener("click", async (e) => {
+      const toBeDecrypted = document.querySelector("textarea#encrypted").value;
+      const password = document.querySelector('input[name="password"]').value;
+
+      try {
+        const decrypted = await decrypt(toBeDecrypted, password);
+        document.querySelector("textarea#plain").value = decrypted;
+        document.querySelector("textarea#encrypted").value = "";
+      } catch (error) {
+        alert("Error decrypting, the password is probably invalid.");
+        console.error(error);
+      }
+    });
+</script>
+
+<style>
+  p {
+    text-align: center;
+  }
+  fieldset {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "Plain Plain"
+      "Password Buttons"
+      "Encrypted Encrypted";
+    gap: 18px 32px;
+  }
+
+  label[for="plain"] {
+    grid-area: Plain;
+  }
+  .abel[for="password"] {
+    grid-area: Password;
+  }
+  .Butt2 {
+    grid-area: Butt2;
+  }
+  label[for="encrypted"] {
+    grid-area: Encrypted;
+  }
+
+  label {
+    font-size: 16px;
+    textarea {
+      min-height: 84px;
+    }
+    textarea#encrypted {
+      word-break: break-all;
+    }
+  }
+  div.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: calc(1em + 4px);
+  }
+</style>

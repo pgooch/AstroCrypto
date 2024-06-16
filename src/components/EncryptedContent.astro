@@ -1,0 +1,69 @@
+<section class="encryptionWrapper">
+  <section data-encryptedContent="unencrypted"><slot /></section>
+  <form class="password-box box">
+    <strong>Content Encrypted</strong>
+    <input type="password" name="password" placeholder="Password?" />
+    <div class="error"></div>
+    <button type="submit">Decrypt</button>
+  </form>
+</section>
+
+<script>
+  import { decrypt } from "../crypto";
+
+  document
+    .querySelector("form.password-box")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const encryptedBlock = document.querySelector(
+        "section[data-encryptedContent]"
+      );
+      const passwordBlock = document.querySelector("form.password-box");
+
+      const providedPassword = passwordBlock.querySelector(
+        'input[name="password"]'
+      ).value;
+      const encryptedData = encryptedBlock.innerHTML;
+
+      try {
+        const decrypted = await decrypt(encryptedData, providedPassword);
+        encryptedBlock.innerHTML = decrypted;
+        encryptedBlock.dataset.encryptedcontent = "decrypted";
+        passwordBlock.remove();
+      } catch (err) {
+        console.error(err);
+        passwordBlock.querySelector(".error").innerHTML = "Incorrect Password.";
+        passwordBlock.querySelector('input[name="password"]').value = "";
+      }
+    });
+</script>
+
+<style>
+  section[data-encryptedContent="unencrypted"] {
+    background-color: red;
+    color: white;
+  }
+  section[data-encryptedContent="encrypted"] {
+    display: none;
+  }
+
+  .password-box {
+    max-width: 250px;
+    margin: auto;
+    text-align: center;
+    font-weight: normal;
+  }
+  .password-box strong {
+    display: block;
+    font-family: Archivo, sans-serif;
+    margin-bottom: 8px;
+  }
+  .password-box .error {
+    font-family: Archivo, sans-serif;
+    font-size: 18px;
+    color: #cc0000;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+</style>

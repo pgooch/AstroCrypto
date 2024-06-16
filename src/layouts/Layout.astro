@@ -1,0 +1,145 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="livid.host Portal" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header>
+      <h1>AstroCrypto</h1>
+    </header>
+    <slot />
+    <footer>Project source available on <a href="#">GitHub</a>.</footer>
+  </body>
+</html>
+
+<style is:global>
+  @font-face {
+    font-family: "Archivo";
+    src: url("/fonts/ArchivoBlack-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  :root {
+    --background: #fafafa;
+    --foreground: #333;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #222;
+      --foreground: #eee;
+    }
+  }
+  html {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+  body {
+    max-width: 600px;
+    padding: 0 20px;
+    margin: auto;
+    font-size: 18px;
+    font-family: sans-serif;
+  }
+  .box {
+    border: 2px solid
+      color-mix(in lch, var(--background) 80%, var(--foreground));
+    border-radius: 2px;
+    background-color: color-mix(
+      in lch,
+      var(--background) 90%,
+      var(--foreground)
+    );
+    padding: 12px;
+  }
+  p {
+    text-align: justify;
+  }
+  a {
+    color: color-mix(in lch, var(--background) 10%, var(--foreground));
+    text-decoration: none;
+  }
+  a:hover {
+    color: color-mix(in lch, var(--background) 20%, var(--foreground));
+    text-decoration: underline;
+  }
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+    border: 2px solid
+      color-mix(in lch, var(--background) 70%, var(--foreground));
+    border-radius: 2px;
+    background-color: color-mix(
+      in lch,
+      var(--background) 80%,
+      var(--foreground)
+    );
+    font-family: sans-serif;
+    font-size: 18px;
+    color: var(--foreground);
+    min-width: calc(100% - 12px);
+    max-width: calc(100% - 12px);
+    margin-top: 4px;
+    padding: 4px;
+  }
+  button {
+    border: 2px solid
+      color-mix(in lch, var(--background) 30%, var(--foreground));
+    border-radius: 4px;
+    background-color: color-mix(
+      in lch,
+      var(--background) 20%,
+      var(--foreground)
+    );
+    font-family: sans-serif;
+    font-size: 18px;
+    color: var(--background);
+    cursor: pointer;
+  }
+  button:hover {
+    border-color: color-mix(in lch, var(--background) 20%, var(--foreground));
+    background-color: color-mix(
+      in lch,
+      var(--background) 10%,
+      var(--foreground)
+    );
+  }
+  button:active {
+    border-color: color-mix(in lch, var(--background) 40%, var(--foreground));
+    background-color: color-mix(
+      in lch,
+      var(--background) 30%,
+      var(--foreground)
+    );
+  }
+</style>
+<style>
+  header h1 {
+    font-family: Archivo, sans-serif;
+    font-size: 38px;
+    text-align: center;
+  }
+  footer {
+    font-family: Archivo, sans-serif;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 2em;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
+</style>
