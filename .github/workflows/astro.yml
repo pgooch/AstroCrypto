@@ -2,7 +2,7 @@
 #
 # To get started with Astro see: https://docs.astro.build/en/getting-started/
 #
-name: Deploy Astro site to Pages
+name: Deploy AstroCrypto to Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -26,8 +26,8 @@ concurrency:
 
 env:
   BUILD_PATH: "." # default value when not using subfolders
-  # BUILD_PATH: subfolder
-
+  PASSWORD: "password"
+  
 jobs:
   build:
     name: Build
